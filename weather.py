@@ -1,11 +1,12 @@
 import numpy as np
+import os
 import pickle
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 # Load trained model
-saved_model = r"D:\python\weather\model.pkl"
+saved_model = "model.pkl"
 with open(saved_model, 'rb') as file:
     model = pickle.load(file)
 
@@ -41,4 +42,5 @@ def predict():
         return f"Error: {e}"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT',10000))
+    app.run(host='0.0.0.0',port=port,debug=False)
